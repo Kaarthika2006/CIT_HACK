@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrowdGuardian Sentinel | Real-Time Crowd Intelligence</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+    <!-- Placeholder for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i class="fas fa-shield-halved"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="brand-name">CrowdGuardian</span>
+                    <span class="brand-sub">Sentinel</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <i class="fas fa-th-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-page="cameras">
+                    <i class="fas fa-video"></i>
+                    <span>Cameras</span>
+                </a>
+                <a href="#" class="nav-item" data-page="analyzer">
+                    <i class="fas fa-brain"></i>
+                    <span>AI Analyzer</span>
+                </a>
+                <a href="#" class="nav-item" data-page="analytics">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-item" data-page="reports">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="#" class="nav-item" data-page="alerts">
+                    <i class="fas fa-bell"></i>
+                    <span>Alerts</span>
+                    <span class="badge">2</span>
+                </a>
+                <a href="#" class="nav-item" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <div class="user-info">
+                    <span class="user-name">Admin User</span>
+                    <span class="user-role">System Overseer</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h1>Live Monitoring</h1>
+                    <div class="sub-title">Real-time crowd intelligence dashboard</div>
+                </div>
+
+                <div class="header-right">
+                    <div class="system-status">
+                        <span class="status-dot"></span>
+                        <span class="status-text">System Active</span>
+                    </div>
+                    <div id="digital-clock" class="digital-clock">00:00:00 PM</div>
+                </div>
+            </header>
+
+            <!-- Dashboard View -->
+            <div id="dashboard-view" class="view">
+                <!-- Stats Row -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="stat-info">
+                            <h3>Total People Detected</h3>
+                            <div class="stat-value">1,092</div>
+                            <div class="stat-change positive">+12% from last hour</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon active-cam"><i class="fas fa-video"></i></div>
+                        <div class="stat-info">
+                            <h3>Active Cameras</h3>
+                            <div class="stat-value">6/6</div>
+                            <div class="stat-change">All systems operational</div>
+                        </div>
+                    </div>
+                    <div class="stat-card risk">
+                        <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="stat-info">
+                            <h3>High-Risk Zones</h3>
+                            <div class="stat-value">2</div>
+                            <div class="stat-change negative">Critical attention req.</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon density"><i class="fas fa-tachometer-alt"></i></div>
+                        <div class="stat-info">
+                            <h3>Avg. Density</h3>
+                            <div class="stat-value">1.82</div>
+                            <div class="stat-change">Stable flow</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-main-grid">
+                    <div class="primary-feed-container">
+                        <div class="section-header">
+                            <h2>Primary Feed</h2>
+                            <div class="dropdown">
+                                <span id="camera-selector">Main Entrance <i class="fas fa-chevron-down"></i></span>
+                            </div>
+                        </div>
+                        <div class="live-feed">
+                            <div class="live-badge">LIVE</div>
+                            <div class="camera-overlay">
+                                <div class="overlay-item">Cam_01 // Entrance_Main</div>
+                                <div class="overlay-item">FPS: 30 // 1080p</div>
+                            </div>
+                            <!-- Background will be blurred via CSS -->
+                            <div class="feed-placeholder"></div>
+                        </div>
+                    </div>
+
+                    <div class="right-panel">
+                        <div class="risk-assessment">
+                            <h3>Risk Assessment Module</h3>
+                            <div class="gauge-container">
+                                <div class="gauge-bar">
+                                    <div class="gauge-fill" style="width: 10%;"></div>
+                                </div>
+                                <div class="gauge-labels">
+                                    <span>Safe</span>
+                                    <span>High</span>
+                                </div>
+                            </div>
+                            <div class="risk-stats">
+                                <div class="risk-item">
+                                    <span>Crowd Density</span>
+                                    <span class="value">0.10</span>
+                                </div>
+                            </div>
+                            <button class="risk-status-btn">LOW RISK</button>
+                        </div>
+
+                        <div class="alerts-panel">
+                            <div class="section-header">
+                                <h3>Alerts (2)</h3>
+                            </div>
+                            <div class="alerts-list">
+                                <div class="alert-card high">
+                                    <div class="alert-icon"><i class="fas fa-circle-exclamation"></i></div>
+                                    <div class="alert-content">
+                                        <div class="alert-meta">
+                                            <span class="level">HIGH</span>
+                                            <span class="time">11:04:06 PM</span>
+                                        </div>
+                                        <div class="alert-loc">Concert Hall</div>
+                                        <div class="alert-msg">High crowd density detected</div>
+                                    </div>
+                                </div>
+                                <div class="alert-card high">
+                                    <div class="alert-icon"><i class="fas fa-circle-exclamation"></i></div>
+                                    <div class="alert-content">
+                                        <div class="alert-meta">
+                                            <span class="level">HIGH</span>
+                                            <span class="time">11:04:06 PM</span>
+                                        </div>
+                                        <div class="alert-loc">VIP Lounge</div>
+                                        <div class="alert-msg">Unusual congestion detected</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trend-section">
+                    <div class="section-header">
+                        <h2>Crowd Trend (Last 30 Minutes)</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="crowdTrendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cameras View -->
+            <div id="cameras-view" class="view hidden">
+                <div class="section-header">
+                    <h2>All Cameras</h2>
+                </div>
+                <div class="cameras-grid">
+                    <!-- 6 Camera Cards -->
+                    <div class="cam-card">
+                        <div class="cam-preview">
+                            <div class="live-badge">LIVE</div>
+                            <div class="cam-name">Main Entrance</div>
+                        </div>
+                        <div class="cam-details">
+                            <div class="cam-stat">
+                                <span class="label">People:</span>
+                                <span class="value">90</span>
+                            </div>
+                            <div class="cam-loc">Level 2</div>
+                        </div>
+                    </div>
+                    <div class="cam-card">
+                        <div class="cam-preview">
+                            <div class="live-badge">LIVE</div>
+                            <div class="cam-name">Food Court</div>
+                        </div>
+                        <div class="cam-details">
+                            <div class="cam-stat">
+                                <span class="label">People:</span>
+                                <span class="value">220</span>
+                            </div>
+                            <div class="cam-loc">Building A</div>
+                        </div>
+                    </div>
+                    <div class="cam-card">
+                        <div class="cam-preview">
+                            <div class="live-badge">LIVE</div>
+                            <div class="cam-name">Concert Hall</div>
+                        </div>
+                        <div class="cam-details">
+                            <div class="cam-stat">
+                                <span class="label">People:</span>
+                                <span class="value">148</span>
+                            </div>
+                            <div class="cam-loc">Main Arena</div>
+                        </div>
+                    </div>
+                    <div class="cam-card">
+                        <div class="cam-preview">
+                            <div class="live-badge">LIVE</div>
+                            <div class="cam-name">Parking Garage</div>
+                        </div>
+                        <div class="cam-details">
+                            <div class="cam-stat">
+                                <span class="label">People:</span>
+                                <span class="value">246</span>
+                            </div>
+                            <div class="cam-loc">Level 1</div>
+                        </div>
+                    </div>
+                    <div class="cam-card">
+                        <div class="cam-preview">
+                            <div class="live-badge">LIVE</div>
+                            <div class="cam-name">Exit Gate</div>
+                        </div>
+                        <div class="cam-details">
+                            <div class="cam-stat">
+                                <span class="label">People:</span>
+                                <span class="value">10</span>
+                            </div>
+                            <div class="cam-loc">Gate 4</div>
+                        </div>
+                    </div>
+                    <div class="cam-card">
+                        <div class="cam-preview">
+                            <div class="live-badge">LIVE</div>
+                            <div class="cam-name">VIP Lounge</div>
+                        </div>
+                        <div class="cam-details">
+                            <div class="cam-stat">
+                                <span class="label">People:</span>
+                                <span class="value">410</span>
+                            </div>
+                            <div class="cam-loc">Level 3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Analyzer View -->
+            <div id="analyzer-view" class="view hidden">
+                <div class="section-header">
+                    <h2>AI Crowd Analyzer</h2>
+                </div>
+
+                <div class="analyzer-grid">
+                    <!-- Upload Box -->
+                    <div class="upload-container">
+                        <div class="upload-box" id="drop-zone">
+                            <div class="upload-icons">
+                                <i class="fas fa-file-image"></i>
+                                <i class="fas fa-file-video"></i>
+                            </div>
+                            <h3>Upload Image or Video</h3>
+                            <p>Drag and drop files here or click to browse</p>
+                            <input type="file" id="file-input" hidden accept="image/*,video/*">
+                            <div class="upload-actions">
+                                <button class="btn-outline"
+                                    onclick="document.getElementById('file-input').click()">Upload</button>
+                                <button class="btn-primary" id="analyze-btn">Analyze Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Analysis Output Panel -->
+                    <div class="analysis-output hidden" id="analysis-panel">
+                        <div class="analysis-card">
+                            <div class="card-left">
+                                <div class="preview-container" id="preview-wrapper">
+                                    <div class="heatmap-overlay" id="heatmap"></div>
+                                    <img id="analysis-preview"
+                                        src="https://images.unsplash.com/photo-1541746972996-4e0b0f43e01a?auto=format&fit=crop&q=80&w=800"
+                                        alt="Analysis Preview">
+                                    <canvas id="detection-canvas"></canvas>
+                                </div>
+                            </div>
+                            <div class="card-right">
+                                <div class="result-header">
+                                    <span class="density-label high" id="density-result">High Crowd Density</span>
+                                    <div class="people-count">
+                                        <span class="count-val">324</span>
+                                        <span class="count-label">Detected People</span>
+                                    </div>
+                                </div>
+
+                                <div class="analysis-meters">
+                                    <div class="meter-item">
+                                        <div class="meter-label">
+                                            <span>Space Occupancy</span>
+                                            <span class="meter-val">84%</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill high" style="width: 84%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="meter-item">
+                                        <div class="meter-label">
+                                            <span>AI Confidence</span>
+                                            <span class="meter-val">98.2%</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 98%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ai-recommendation">
+                                    <div class="rec-title"><i class="fas fa-robot"></i> AI Recommendation</div>
+                                    <p id="rec-text">Redirect crowd flow immediately. Area approaching critical capacity
+                                        limits.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Placeholder Views -->
+            <div id="analytics-view" class="view hidden">
+                <div class="section-header">
+                    <h2>Analytics Dashboard</h2>
+                    <button class="btn-outline" id="refresh-analytics" style="padding: 8px 16px;"><i
+                            class="fas fa-sync-alt"></i> Refresh Data</button>
+                </div>
+
+                <div class="trend-section" style="margin-top: 20px;">
+                    <div class="chart-container" style="height: 300px;">
+                        <canvas id="historicalAnalyticsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="stats-grid" id="analytics-zones-grid" style="margin-top: 20px;">
+                    <!-- Filled by JS -->
+                </div>
+            </div>
+
+            <div id="reports-view" class="view hidden">
+                <div class="section-header">
+                    <h2>Generated Reports</h2>
+                </div>
+
+                <div
+                    style="background: rgba(0,255,213,0.05); border: 1px solid rgba(0,255,213,0.2); border-radius: 12px; padding: 30px; margin-top: 20px;">
+                    <h3>Crowd Density & Incident Report</h3>
+                    <p style="color: var(--text-muted); margin: 15px 0 25px;">Export the comprehensive analytics report
+                        including timeline metrics, zone capacity warnings, and generated alerts for the last 24 hours.
+                    </p>
+                    <a href="/api/reports/download" class="btn-primary"
+                        style="display: inline-block; text-decoration: none;"><i class="fas fa-file-download"></i>
+                        Download CSV Report</a>
+                </div>
+            </div>
+
+            <div id="alerts-view" class="view hidden">
+                <div class="section-header">
+                    <h2>System Alerts</h2>
+                </div>
+                <div
+                    style="padding: 40px; text-align: center; color: var(--text-muted); background: rgba(0,255,213,0.05); border: 1px solid rgba(0,255,213,0.2); border-radius: 12px; margin-top: 20px;">
+                    <i class="fas fa-bell" style="font-size: 3rem; margin-bottom: 15px; color: var(--accent-teal);"></i>
+                    <h3>Active Alerts</h3>
+                    <p>Manage and configure threshold-based system notifications.</p>
+                </div>
+            </div>
+
+            <div id="settings-view" class="view hidden">
+                <div class="section-header">
+                    <h2>Configuration Settings</h2>
+                </div>
+                <div
+                    style="padding: 40px; text-align: center; color: var(--text-muted); background: rgba(0,255,213,0.05); border: 1px solid rgba(0,255,213,0.2); border-radius: 12px; margin-top: 20px;">
+                    <i class="fas fa-cog" style="font-size: 3rem; margin-bottom: 15px; color: var(--accent-teal);"></i>
+                    <h3>System Configuration</h3>
+                    <p>Manage ML model parameters, camera streams, and UI preferences.</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
